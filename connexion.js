@@ -10,19 +10,22 @@ export default class CheckConnexion extends LitElement {
         this.arrTimes = [];
         this.abortFallback = false;
         this.timeToCount = 3;
-        this.threshold = 3000;
-        this.offlineTimeout = 3000
+        this.threshold = 2000;
+        this.offlineTimeout = 3000;
+        this.message = "Disconnected";
+        this.timeout = () => {};
     }
 
     static get properties() {
         return {
             timeToCount: {type: Number},
             threshold: {type: Number},
-            offlineTimeout: {type: Number}
+            offlineTimeout: {type: Number},
+            message: {type: Text}
         }
     }
 
-    firstUpdated() {
+    firstUpdated(_changeProperty) {
         this.checkConnectivity();
     }
 
@@ -31,20 +34,20 @@ export default class CheckConnexion extends LitElement {
             detail: state
         });
         document.dispatchEvent(event);
-        const isDisconnectedDiv = this.shadowRoot.querySelector('.isDisconnected');
+        const connexionDiv = this.shadowRoot.querySelector('.connexion');
         if (!state) {
-            isDisconnectedDiv.setAttribute('active', '');
+            connexionDiv.setAttribute('active', '');
         } else {
-            isDisconnectedDiv.removeAttribute('active');
+            clearTimeout(this.timeout);
+            connexionDiv.removeAttribute('active');
         }
     }
 
     checkConnectivity() {
         if (navigator.onLine) {
-            console.log('online');
             this.changeConnectivity(true);
         } else {
-            setTimeout(() => {
+            this.timeout = setTimeout(() => {
                 this.changeConnectivity(false);
             }, this.offlineTimeout);
         }
@@ -53,7 +56,7 @@ export default class CheckConnexion extends LitElement {
             this.changeConnectivity(true);
         });
         window.addEventListener('offline', e => {
-            setTimeout(() => {
+            this.timeout = setTimeout(() => {
                 this.changeConnectivity(false);
             }, this.offlineTimeout);
         });
@@ -80,7 +83,7 @@ export default class CheckConnexion extends LitElement {
                 this.counter++;
             };
             this.image.offline = () => {
-                setTimeout(() => {
+                this.timeout = setTimeout(() => {
                     this.changeConnectivity(false);
                 }, this.offlineTimeout);
             }
@@ -92,7 +95,7 @@ export default class CheckConnexion extends LitElement {
     }
 
     timeoutCallback() {
-        setTimeout(() => {
+        this.timeout = setTimeout(() => {
             if (!this.abortFallback) {
                 console.log('Connectivity is too slow, falling back offline experience');
                 this.changeConnectivity(false);
@@ -112,21 +115,44 @@ export default class CheckConnexion extends LitElement {
     }
 
     static get styles() {
-        return css`
-            .connexion > .isDisconnected {
-                display: none;
+        return css`       
+            .connexion {
+                --check-connexion-font-size: 2vh;
+                --check-connexion-background-color: #d00000;
+                --check-connexion-text-color: #ffffff;
+                --check-connexion-text-transform: uppercase;
+                --check-connexion-height: 50px;
+            } 
+            
+            .connexion {
+                height: 0;
+                opacity: 0;
+                position: fixed;
+                line-height: var(--check-connexion-height);
+                bottom: 0;
+                width: 100%;
+                background-color: var(--check-connexion-background-color);
+                color: var(--check-connexion-text-color);
+                text-align: center;
+                padding: 5px;
+                transition: 1s all ease-in-out;
+                overflow: hidden;
             }
-            .connexion > .isDisconnected[active] {
-                display: block;
+            .connexion[active] {
+                height: var(--check-connexion-height);
+                opacity: 1;
             }
-        `
+            .isDisconnected {
+                font-size: var(--check-connexion-font-size);
+                text-transform: var(--check-connexion-text-transform)
+            }
+        `;
     }
 
     render() {
         return html`
             <div class="connexion">
-                <div>CheckConnexion</div>
-                <div class="isDisconnected">Vous êtes déconnecté</div>
+                <div class="isDisconnected">${this.message}</div>
             </div>
         `
     }
