@@ -8,11 +8,18 @@ run this in your work directory
 npm i wcomponent-check-connexion
 ```
 
-include the package with :
+include the package with in html files :
 
 ```html
-<script src="path/to/src/connexion.min.js" async></script>
+<script src="path/to/connexion.js" async></script>
 ```
+
+or in js files :
+
+```js
+import CheckConnexion from "./path/to/Connexion";
+```
+
     
 ## Use 
 
