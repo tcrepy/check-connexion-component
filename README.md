@@ -5,7 +5,7 @@
 run this in your work directory
 
 ```
-npm i check-connexion-component
+npm i wcomponent-check-connexion
 ```
 
 include the package with :
