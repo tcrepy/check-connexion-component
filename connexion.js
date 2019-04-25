@@ -14,6 +14,7 @@ export default class CheckConnexion extends LitElement {
         this.offlineTimeout = 3000;
         this.message = "Disconnected";
         this.timeout = () => {};
+        this.intervalCheckLatency = 6000;
     }
 
     static get properties() {
@@ -21,19 +22,31 @@ export default class CheckConnexion extends LitElement {
             timeToCount: {type: Number},
             threshold: {type: Number},
             offlineTimeout: {type: Number},
-            message: {type: Text}
+            message: {type: Text},
+            intervalCheckLatency: {type: Number}
         }
     }
 
+    /**
+     * init the function which observe if user have connexion
+     * @param _changeProperty
+     */
     firstUpdated(_changeProperty) {
         this.checkConnectivity();
     }
 
+    /**
+     *
+     * @param {boolean} state of the connexion
+     */
     changeConnectivity(state) {
-        const event = new CustomEvent('connection-changed', {
+        //fire the event connexion-changed in document
+        const event = new CustomEvent('connexion-changed', {
             detail: state
         });
         document.dispatchEvent(event);
+
+        //display the div to inform user that they didn't havec connexion
         const connexionDiv = this.shadowRoot.querySelector('.connexion');
         if (!state) {
             connexionDiv.setAttribute('active', '');
@@ -43,7 +56,11 @@ export default class CheckConnexion extends LitElement {
         }
     }
 
+    /**
+     * function used to check the connexion of users
+     */
     checkConnectivity() {
+        //users have connexion when they load the page ?
         if (navigator.onLine) {
             this.changeConnectivity(true);
         } else {
@@ -52,42 +69,56 @@ export default class CheckConnexion extends LitElement {
             }, this.offlineTimeout);
         }
 
-        window.addEventListener('online', e => {
+        //event listener online / offline
+        window.addEventListener('online', () => {
             this.changeConnectivity(true);
         });
-        window.addEventListener('offline', e => {
+        window.addEventListener('offline', () => {
             this.timeout = setTimeout(() => {
                 this.changeConnectivity(false);
             }, this.offlineTimeout);
         });
 
+
+        //timeout in case of the connexion is too slow to load the first request
         this.timeoutCallback();
+        //check if the connexion is too slow
         this.checkLatency(avg => this.handleLatency(avg));
         setInterval(() => {
             this.reset();
             this.timeoutCallback();
             this.checkLatency(avg => this.handleLatency(avg));
-        }, 6000)
+        }, this.intervalCheckLatency)
     }
 
+    /**
+     * make an average of time to get an image
+     * @param {function} callback
+     */
     checkLatency(callback) {
         this.tStart = new Date().getTime();
         if (this.counter < this.timeToCount) {
+            //load image use to check the connexion
             this.image.src = "https://www.google.com/images/phd/px.gif?t=" + this.tStart;
-            this.image.onload = (e) => {
+            this.image.onload = () => {
+                //disabling the fallback timeout
                 this.abortFallback = true;
+
+                //add the time to get the image to an array to make the average
                 this.tEnd = new Date().getTime();
                 let time = this.tEnd - this.tStart;
                 this.arrTimes.push(time);
                 this.checkLatency(callback);
                 this.counter++;
             };
+            //if we can't get the image, passing the connectivity to false
             this.image.offline = () => {
                 this.timeout = setTimeout(() => {
                     this.changeConnectivity(false);
                 }, this.offlineTimeout);
             }
         } else {
+            //average of times to get images
             const sum = this.arrTimes.reduce((a, b) => a + b);
             const avg = sum / this.arrTimes.length;
             callback(avg);
