@@ -6,9 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Tanguy Crepy",
+  "author": "tcrepy",
+  "repository": "github:tcrepy/check-connexion-component",
   "license": "ISC",
   "dependencies": {
     "lit-element": "^2.1.0"
-  }
+  },
+  "keywords": [
+    "web component",
+    "connexion"
+  ]
 }
