@@ -1,0 +1,14 @@
+{
+  "name": "check-connexion-component",
+  "version": "1.0.0",
+  "description": "web component that is used to check user connexion",
+  "main": "connexion.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tanguy Crepy",
+  "license": "ISC",
+  "dependencies": {
+    "lit-element": "^2.1.0"
+  }
+}
