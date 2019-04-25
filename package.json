@@ -1,11 +1,8 @@
 {
   "name": "check-connexion-component",
-  "version": "1.0.0",
+  "version": "0.3.0",
   "description": "web component that is used to check user connexion",
   "main": "connexion.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "tcrepy",
   "repository": "github:tcrepy/check-connexion-component",
   "license": "ISC",
@@ -14,6 +11,8 @@
   },
   "keywords": [
     "web component",
-    "connexion"
+    "connexion",
+    "check connexion",
+    "js"
   ]
 }

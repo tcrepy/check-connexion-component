@@ -11,7 +11,7 @@ npm i check-connexion-component
 include the package with :
 
 ```html
-<script src="path/to/dist/connexion.min.js"></script>
+<script src="path/to/src/connexion.min.js" async></script>
 ```
     
 ## Use 
