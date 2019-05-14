@@ -25,7 +25,16 @@ import CheckConnexion from "./path/to/Connexion";
 
 add `<check-connexion></check-connexion>` anywhere in your html file. 
 
-This web component allow your users to know if they are connected to internet with a message, and the application can catch an event called `connection-changed` fired in `document` to check user's connexion.
+This web component allow your users to know if they are connected to internet with a message, and the application can catch an event called `connexion-changed` fired in `document` to check user's connexion.
+
+The event can be catch with something like that : 
+
+```js
+document.addEventListener('connexion-changed', ({detail}) => {
+    //detail contains a bool wich is indicating the state of the connexion
+    //do wathever you want with it
+})
+```
 
 there is some parameters you can add : 
 
