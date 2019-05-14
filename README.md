@@ -11,7 +11,7 @@ npm i wcomponent-check-connexion
 include the package with :
 
 ```html
-<script src="path/to/src/connexion.min.js" async></script>
+<script src="path/to/src/connexion.js" async></script>
 ```
     
 ## Use 
@@ -23,8 +23,8 @@ This web component allow your users to know if they are connected to internet wi
 there is some parameters you can add : 
 
 - `timeToCount`: number (3), the number of test you'll make before deciding your user have a slow connexion,
-- `threshold`: number (3000), max duration (ms) for the average of test's duration,
-- `offlineTimeout`: number (3000), duration (ms) before the application pass offline,
+- `threshold`: number (2000), max duration (ms) for the average of test's duration,
+- `offlineTimeout`: number (2000), duration (ms) before the application pass offline,
 - `message`: text ("Disconnected"), the message you want to display when the app is offline,
 - `intervalCheckLatency`: number (6000), the interval (ms) between each connexion test
 
