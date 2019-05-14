@@ -187,7 +187,6 @@ export default class CheckConnexion extends LitElement {
 
     render() {
         let classInactive = !this.state ? 'active' : '';
-        console.log(classInactive);
         return html`
             <div class="connexion ${classInactive}">
                 <div class="isDisconnected">${this.message}</div>
