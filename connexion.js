@@ -11,10 +11,11 @@ export default class CheckConnexion extends LitElement {
         this.abortFallback = false;
         this.timeToCount = 3;
         this.threshold = 2000;
-        this.offlineTimeout = 3000;
+        this.offlineTimeout = 2000;
         this.message = "Disconnected";
         this.timeout = () => {};
         this.intervalCheckLatency = 6000;
+        this.state = true;
     }
 
     static get properties() {
@@ -23,7 +24,8 @@ export default class CheckConnexion extends LitElement {
             threshold: {type: Number},
             offlineTimeout: {type: Number},
             message: {type: Text},
-            intervalCheckLatency: {type: Number}
+            intervalCheckLatency: {type: Number},
+            active: {type: Boolean}
         }
     }
 
@@ -45,14 +47,17 @@ export default class CheckConnexion extends LitElement {
             detail: state
         });
         document.dispatchEvent(event);
-
+        this.changeState(state);
         //display the div to inform user that they didn't havec connexion
-        const connexionDiv = this.shadowRoot.querySelector('.connexion');
-        if (!state) {
-            connexionDiv.setAttribute('active', '');
-        } else {
+        if (state) {
             clearTimeout(this.timeout);
-            connexionDiv.removeAttribute('active');
+        }
+    }
+
+    changeState(state) {
+        if (state !== this.state) {
+            this.state = !this.state;
+            this.requestUpdate();
         }
     }
 
@@ -169,7 +174,7 @@ export default class CheckConnexion extends LitElement {
                 transition: 1s all ease-in-out;
                 overflow: hidden;
             }
-            .connexion[active] {
+            .active {
                 height: var(--check-connexion-height);
                 opacity: 1;
             }
@@ -181,8 +186,10 @@ export default class CheckConnexion extends LitElement {
     }
 
     render() {
+        let classInactive = !this.state ? 'active' : '';
+        console.log(classInactive);
         return html`
-            <div class="connexion">
+            <div class="connexion ${classInactive}">
                 <div class="isDisconnected">${this.message}</div>
             </div>
         `
