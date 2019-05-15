@@ -2,7 +2,7 @@
   "name": "wcomponent-check-connexion",
   "version": "0.1.3",
   "description": "web component that is used to check user connexion",
-  "main": "connexion.js",
+  "main": "src/index.js",
   "author": "tcrepy",
   "repository": "github:tcrepy/check-connexion-component",
   "license": "ISC",
@@ -13,5 +13,23 @@
     "web component",
     "connexion",
     "check connexion"
-  ]
+  ],
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-standard-pkg"
+      ],
+      [
+        "@pika/plugin-build-node"
+      ],
+      [
+        "@pika/plugin-build-web"
+      ]
+    ]
+  },
+  "devDependencies": {
+    "@pika/plugin-build-node": "^0.3.16",
+    "@pika/plugin-build-web": "^0.3.16",
+    "@pika/plugin-standard-pkg": "^0.3.16"
+  }
 }

@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit-element";
+import { LitElement, html, css } from "lit-element/lit-element";
 
 export default class CheckConnexion extends LitElement {
     constructor() {
