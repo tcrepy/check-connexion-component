@@ -1,14 +1,13 @@
 {
   "name": "wcomponent-check-connexion",
   "description": "web component that is used to check user connexion",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "ISC",
   "files": [
     "dist-*/",
     "bin/"
   ],
   "esnext": "dist-src/index.js",
-  "main": "dist-node/index.js",
   "module": "dist-web/index.js",
   "pika": true,
   "sideEffects": false,
