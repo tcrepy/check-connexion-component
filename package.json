@@ -1,6 +1,6 @@
 {
   "name": "wcomponent-check-connexion",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "web component that is used to check user connexion",
   "main": "src/index.js",
   "author": "tcrepy",
