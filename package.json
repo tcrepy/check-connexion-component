@@ -24,12 +24,28 @@
       ],
       [
         "@pika/plugin-build-web"
+      ],
+      [
+        "pika-plugin-minify",
+        {
+          "minifyOptions": {
+            "ecma": 5,
+            "keep_classnames": false,
+            "keep_fnames": false,
+            "ie8": true,
+            "module": true,
+            "safari10": true,
+            "toplevel": false,
+            "warnings": false
+          }
+        }
       ]
     ]
   },
   "devDependencies": {
     "@pika/plugin-build-node": "^0.3.16",
     "@pika/plugin-build-web": "^0.3.16",
-    "@pika/plugin-standard-pkg": "^0.3.16"
+    "@pika/plugin-standard-pkg": "^0.3.16",
+    "pika-plugin-minify": "^0.1.0"
   }
 }
