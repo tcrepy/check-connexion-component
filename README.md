@@ -8,18 +8,22 @@ run this in your work directory
 npm i wcomponent-check-connexion
 ```
 
+You can pick one of three directory according of the use you want : 
+
+- `dist-src` : ES2018 file
+- `dist-web` : ESM distribution optimized for browsers & bundlers
+
 include the package with in html files :
 
 ```html
-<script src="path/to/index.js" async></script>
+<script src="node_modules/wcomponent-check-connexion/dist-web/index.min.js" async></script>
 ```
 
-or in js files :
+or in js ESM files :
 
 ```js
-import CheckConnexion from "./path/to/Connexion";
+import CheckConnexion from "wcomponent-check-connexion/dist-src/index.min";
 ```
-
     
 ## Use 
 
